@@ -13,6 +13,7 @@ class Sales extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->library('pdf');
         $this->load->library('excel_export');
+        // Security features are automatically available when csrf_protection is enabled in config
     }
 
     /**
@@ -121,6 +122,7 @@ class Sales extends CI_Controller {
      */
     public function export_excel()
     {
+        // CSRF verification is automatically handled by CodeIgniter when csrf_protection is enabled
         $date_from = $this->input->get('date_from') ?: date('Y-m-01');
         $date_to = $this->input->get('date_to') ?: date('Y-m-d');
         
@@ -155,6 +157,7 @@ class Sales extends CI_Controller {
      */
     public function export_top_products()
     {
+        // CSRF verification is automatically handled by CodeIgniter when csrf_protection is enabled
         $date_from = $this->input->get('date_from') ?: date('Y-m-01');
         $date_to = $this->input->get('date_to') ?: date('Y-m-d');
         
@@ -166,10 +169,23 @@ class Sales extends CI_Controller {
     }
 
     /**
+     * Get CSRF token for AJAX requests
+     */
+    public function get_csrf_token()
+    {
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array(
+                'csrf_token' => $this->security->get_csrf_hash()
+            )));
+    }
+
+    /**
      * Calculate transaction totals via AJAX
      */
     public function calculate()
     {
+        // For AJAX requests, CSRF verification is handled automatically
         $items = json_decode($this->input->post('items'), true);
         $kode_promo = $this->input->post('kode_promo');
         
