@@ -1,0 +1,59 @@
+# Development override for docker-compose.yml
+# This file extends the base docker-compose.yml for development use
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+version: '3.8'
+
+services:
+  app:
+    volumes:
+      # Mount source code for live editing
+      - .:/var/www/html
+      # Mount composer cache
+      - ~/.composer/cache:/var/www/.composer/cache
+    environment:
+      # Enable debug mode
+      - CI_ENV=development
+      - PHP_DISPLAY_ERRORS=On
+      - PHP_ERROR_REPORTING=E_ALL
+    ports:
+      - "8080:80"
+    # Override command for development
+    command: >
+      sh -c "
+        chmod -R 777 /var/www/html/application/cache
+        chmod -R 777 /var/www/html/application/logs
+        apache2-foreground
+      "
+
+  db:
+    ports:
+      - "3306:3306"
+    # Enable general query log for debugging
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --general-log=1
+      --general-log-file=/var/lib/mysql/general.log
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/01-init.sql
+      # Mount SQL files for easy import
+      - ./docker/sql:/docker-entrypoint-initdb.d/
+
+  # Development tools
+  mailhog:
+    image: mailhog/mailhog
+    container_name: simple_pos_mailhog
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP
+    networks:
+      - pos_network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  pos_network:
+    driver: bridge
