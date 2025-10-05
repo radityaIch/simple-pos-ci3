@@ -39,12 +39,20 @@
                                        class="btn btn-warning" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="<?php echo base_url('promo/delete/' . $promo->kode_promo); ?>" 
-                                       class="btn btn-danger" 
-                                       onclick="return confirm('Yakin ingin menghapus promo ini?')" 
-                                       title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    <!-- Delete form with POST method for CSRF protection -->
+                                    <?php 
+                                    // Generate fresh CSRF token for each form
+                                    $csrf = array(
+                                        'name' => $this->security->get_csrf_token_name(),
+                                        'hash' => $this->security->get_csrf_hash()
+                                    );
+                                    ?>
+                                    <form method="POST" action="<?php echo base_url('promo/delete/' . $promo->kode_promo); ?>" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus promo ini?')">
+                                        <input type="hidden" name="<?php echo $csrf['name']; ?>" value="<?php echo $csrf['hash']; ?>">
+                                        <button type="submit" class="btn btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
