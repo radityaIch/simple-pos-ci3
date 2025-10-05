@@ -6,6 +6,8 @@
             </div>
             <div class="card-body">
                 <?php echo form_open('', array('class' => 'needs-validation', 'novalidate' => '')); ?>
+                <!-- CSRF Token -->
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                 
                 <div class="mb-3">
                     <label for="kode_promo" class="form-label">Kode Promo *</label>
