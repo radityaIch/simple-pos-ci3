@@ -120,6 +120,22 @@ class Master_barang extends CI_Controller {
      */
     public function delete($kode_barang)
     {
+        // Debug: Log request method and POST data
+        log_message('debug', 'Delete request method: ' . $this->input->method());
+        log_message('debug', 'Is POST: ' . ($this->input->post() ? 'true' : 'false'));
+        log_message('debug', 'CSRF Token Name: ' . $this->security->get_csrf_token_name());
+        log_message('debug', 'Posted CSRF Token Value: ' . ($this->input->post($this->security->get_csrf_token_name()) ?: 'NOT FOUND'));
+        log_message('debug', 'Expected CSRF Token: ' . $this->security->get_csrf_hash());
+        
+        // Verify it's a POST request with CSRF protection enabled
+        if ($this->input->method() !== 'post') {
+            $this->session->set_flashdata('error', 'Aksi tidak valid - Bukan permintaan POST');
+            redirect('master_barang');
+            return;
+        }
+        
+        // CodeIgniter automatically validates CSRF token when csrf_protection is TRUE
+        // Proceed with deletion
         $barang = $this->Master_barang_model->get_by_kode($kode_barang);
         
         if (!$barang) {
@@ -164,6 +180,7 @@ class Master_barang extends CI_Controller {
      */
     private function _handle_form($action, $kode_barang = null)
     {
+        // CSRF verification is automatically handled by CodeIgniter when csrf_protection is enabled
         $data_input = array(
             'kode_barang' => $this->input->post('kode_barang'),
             'nama_barang' => $this->input->post('nama_barang'),
