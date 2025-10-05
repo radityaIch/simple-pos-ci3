@@ -5,6 +5,9 @@
 </div>
 
 <form id="transactionForm" method="POST">
+    <!-- CSRF Token -->
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+    
     <div class="row">
         <!-- Transaction Header -->
         <div class="col-md-4">
