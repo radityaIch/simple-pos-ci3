@@ -111,7 +111,7 @@ The application supports environment variables for configuration. To use environ
 **Quick Start:**
 ```bash
 # Clone the project
-git clone [your-repository-url]
+git clone https://github.com/radityaIch/simple-pos-ci3.git
 cd simple-pos-ci3
 
 # Copy .env file and modify as needed
