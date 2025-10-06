@@ -65,7 +65,7 @@ INSERT INTO `promo` (`kode_promo`, `nama_promo`, `ketereangan`) VALUES
 
 -- Sample Transaction (for testing)
 INSERT INTO `penjualan_header` (`no_transaksi`, `tgl_transaksi`, `customer`, `kode_promo`, `total_bayar`, `ppn`, `grand_total`) VALUES
-('TRX20241004001', '2024-10-04', 'John Doe', 'DISC10', 9000000, 900000, 9000000);
+('TRX20241004001', '2024-10-04', 'John Doe', 'DISC10', 9000000, 900000, 9900000);
 
 INSERT INTO `penjualan_header_detail` (`no_transaksi`, `kode_barang`, `qty`, `harga`, `discount`, `subtotal`) VALUES
 ('TRX20241004001', 'BRG001', 1, 8500000, 0, 8500000),
