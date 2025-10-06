@@ -72,38 +72,6 @@ INSERT INTO `penjualan_header_detail` (`no_transaksi`, `kode_barang`, `qty`, `ha
 ('TRX20241004001', 'BRG002', 2, 250000, 0, 500000);
 
 -- ========================================
--- Sample Data for Testing
--- ========================================
-
--- Master Barang Sample Data
-INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `harga`) VALUES
-('BRG001', 'Laptop Dell Inspiron 15', 8500000),
-('BRG002', 'Mouse Wireless Logitech', 250000),
-('BRG003', 'Keyboard Mechanical RGB', 750000),
-('BRG004', 'Monitor LED 24 inch', 2500000),
-('BRG005', 'Webcam HD 1080p', 450000),
-('BRG006', 'Speaker Bluetooth JBL', 850000),
-('BRG007', 'Headset Gaming', 350000),
-('BRG008', 'SSD 512GB Samsung', 1200000),
-('BRG009', 'RAM DDR4 8GB Corsair', 650000),
-('BRG010', 'Power Bank 20000mAh', 300000);
-
--- Promo Sample Data
-INSERT INTO `promo` (`kode_promo`, `nama_promo`, `keterangan`, `discount_persen`, `discount_nominal`, `min_pembelian`) VALUES
-('DISC10', 'Diskon 10%', 'Diskon 10% untuk pembelian minimal Rp 1.000.000', 10.00, NULL, 1000000),
-('DISC50K', 'Diskon 50 Ribu', 'Diskon Rp 50.000 untuk pembelian minimal Rp 500.000', NULL, 50000, 500000),
-('NEWCUST', 'New Customer', 'Diskon 15% untuk pelanggan baru minimal Rp 2.000.000', 15.00, NULL, 2000000),
-('WEEKEND', 'Weekend Sale', 'Diskon Rp 100.000 untuk weekend shopping minimal Rp 1.500.000', NULL, 100000, 1500000);
-
--- Sample Transaction (for testing)
-INSERT INTO `penjualan_header` (`no_transaksi`, `tgl_transaksi`, `customer`, `kode_promo`, `total_bayar`, `ppn`, `discount_promo`, `grand_total`) VALUES
-('TRX20241004001', '2024-10-04', 'John Doe', 'DISC10', 9000000, 900000, 900000, 9000000);
-
-INSERT INTO `penjualan_header_detail` (`no_transaksi`, `kode_barang`, `qty`, `harga`, `discount`, `subtotal`) VALUES
-('TRX20241004001', 'BRG001', 1, 8500000, 0, 8500000),
-('TRX20241004001', 'BRG002', 2, 250000, 0, 500000);
-
--- ========================================
 -- Indexes for better performance
 -- ========================================
 CREATE INDEX idx_penjualan_header_tgl ON penjualan_header(tgl_transaksi);
