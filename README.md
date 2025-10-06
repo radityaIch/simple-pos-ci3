@@ -140,19 +140,43 @@ If you prefer to use XAMPP instead of Docker:
 **Prerequisites:**
 - XAMPP with PHP 7.4
 - MySQL database server
+- Composer (required, for dependencies)
+
+#### Installing Composer
+
+Composer is a dependency manager for PHP that is required to install the project dependencies.
+
+**On Windows with XAMPP:**
+1. Download the Composer installer from [https://getcomposer.org/download/](https://getcomposer.org/download/)
+2. Run the `Composer-Setup.exe` installer
+3. During installation, make sure to select the same PHP version that XAMPP is using (PHP 7.4)
+4. Verify installation by opening a new command prompt and running:
+   ```bash
+   composer --version
+   ```
+
+**Note**: If you encounter issues during installation, you can also download the `composer.phar` file directly and place it in your project directory. You would then run Composer commands using `php composer.phar` instead of just `composer`.
 
 **Setup Steps:**
 1. **Copy files to XAMPP:**
    - Copy the entire project folder to your XAMPP `htdocs` directory
    - For example: `C:\xampp\htdocs\simple-pos-ci3\`
 
-2. **Create database:**
+2. **Install dependencies:**
+   - Open command prompt/terminal in the project directory
+   - Run `composer install` to install required dependencies
+   ```bash
+   composer install
+   ```
+   **Note**: This step is required because the `vendor` directory is not included in the repository.
+
+3. **Create database:**
    - Start XAMPP and ensure Apache and MySQL services are running
    - Open phpMyAdmin at `http://localhost/phpmyadmin`
    - Create a new database named `simple_pos_ci3`
    - Import the database schema from `databases/database_setup.sql`
 
-3. **Configure environment variables:**
+4. **Configure environment variables:**
    - Copy `.env.example` to `.env`:
    ```cmd
    copy .env.example .env
@@ -166,7 +190,7 @@ If you prefer to use XAMPP instead of Docker:
    DB_PASSWORD=
    ```
 
-4. **Set file permissions:**
+5. **Set file permissions:**
    - Ensure the following directories are writable:
    ```bash
    chmod 755 application/cache/
@@ -174,7 +198,7 @@ If you prefer to use XAMPP instead of Docker:
    ```
    - On Windows, right-click these folders → Properties → Security → Ensure Apache/PHP has write permissions
 
-5. **Access the application:**
+6. **Access the application:**
    - Open your browser and navigate to:
    ```
    http://localhost/simple-pos-ci3/
@@ -186,7 +210,35 @@ If you prefer to use XAMPP instead of Docker:
 - Web Server (Apache/Nginx)
 - PHP 7.4
 - MySQL 5.7 or higher
-- Composer (optional, for dependencies)
+- Composer (required, for dependencies)
+
+#### Installing Composer
+
+Composer is a dependency manager for PHP that is required to install the project dependencies.
+
+**On Windows:**
+1. Download the Composer installer from [https://getcomposer.org/download/](https://getcomposer.org/download/)
+2. Run the `Composer-Setup.exe` installer
+3. Follow the installation wizard steps
+4. Verify installation by opening a new command prompt and running:
+   ```bash
+   composer --version
+   ```
+
+**On macOS/Linux:**
+1. Download and install Composer globally by running these commands in your terminal:
+   ```bash
+   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+   php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+   php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+   php -r "unlink('composer-setup.php');"
+   ```
+2. Verify installation by running:
+   ```bash
+   composer --version
+   ```
+
+**Note**: If you're using XAMPP on Windows, make sure to install Composer with the same PHP version that XAMPP is using (PHP 7.4).
 
 ### Step 1: Clone/Download Project
 ```bash
@@ -194,14 +246,22 @@ git clone https://github.com/radityaIch/simple-pos-ci3.git
 # or download and extract the ZIP file
 ```
 
-### Step 2: Database Setup
+### Step 2: Install Dependencies
+- Navigate to the project directory
+- Run `composer install` to install required dependencies:
+```bash
+composer install
+```
+**Note**: This step is required because the `vendor` directory is not included in the repository.
+
+### Step 3: Database Setup
 1. Create a new MySQL database named `simple_pos_ci3`
 2. Import the database schema and sample data:
 ```sql
 mysql -u root -p simple_pos_ci3 < databases/database_setup.sql
 ```
 
-### Step 3: Environment Configuration
+### Step 4: Environment Configuration
 1. Copy `.env.example` to `.env`:
    ```bash
    cp .env.example .env
@@ -215,7 +275,7 @@ mysql -u root -p simple_pos_ci3 < databases/database_setup.sql
    DB_PASSWORD=your_db_password
    ```
 
-### Step 4: Server Configuration
+### Step 5: Server Configuration
 1. Ensure your web server document root points to the project directory
 2. Make sure `mod_rewrite` is enabled (for Apache)
 3. Set appropriate file permissions:
@@ -224,7 +284,7 @@ chmod 755 application/cache/
 chmod 755 application/logs/
 ```
 
-### Step 5: Access the Application
+### Step 6: Access the Application
 Open your browser and navigate to:
 ```
 http://your-domain.com/simple-pos-ci3/
